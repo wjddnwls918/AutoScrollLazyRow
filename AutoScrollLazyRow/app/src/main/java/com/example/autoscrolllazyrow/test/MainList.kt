@@ -19,7 +19,10 @@ fun MainList(modifier: Modifier = Modifier, commonViewModel: CommonViewModel = v
             Box(
                 modifier = Modifier
                     .fillParentMaxWidth()
-                    .fillParentMaxHeight(0.3f), contentAlignment = Alignment.Center
+                    .fillParentMaxHeight(0.3f)
+                    .clickable {
+                        commonViewModel.openSecondActivity()
+                    }, contentAlignment = Alignment.Center
             ) {
                 Text(text = "1")
             }
@@ -67,8 +70,7 @@ fun MainList(modifier: Modifier = Modifier, commonViewModel: CommonViewModel = v
                         .size(width = 140.dp, height = 168.dp)
                         .clickable {
                             commonViewModel.openSecondActivity()
-                        }
-                    , it.toString()
+                        }, it.toString()
                 )
             }
         }
