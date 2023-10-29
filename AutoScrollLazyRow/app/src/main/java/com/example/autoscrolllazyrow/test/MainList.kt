@@ -1,6 +1,8 @@
 package com.example.autoscrolllazyrow.test
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.detectDragGestures
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -8,6 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.autoscrolllazyrow.CommonViewModel
@@ -64,6 +67,16 @@ fun MainList(modifier: Modifier = Modifier, commonViewModel: CommonViewModel = v
                 list = (1..8).take(4), modifier = Modifier
                     .fillParentMaxWidth()
                     .fillParentMaxHeight(0.3f)
+                    .pointerInput(Unit) {
+                        detectTapGestures(
+                            onPress = { /* Called when the gesture starts */ },
+                            onDoubleTap = { /* Called on Double Tap */ },
+                            onLongPress = { /* Called on Long Press */ },
+                            onTap = { /* Called on Tap */ }
+                        )
+                        
+                        detectDragGestures { change, dragAmount ->  }
+                    }
             ) {
                 ListItem(
                     modifier = Modifier
