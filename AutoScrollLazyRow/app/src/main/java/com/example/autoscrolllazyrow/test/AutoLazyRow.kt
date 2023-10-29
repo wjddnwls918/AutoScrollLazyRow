@@ -1,5 +1,6 @@
 package com.example.autoscrolllazyrow.test
 
+import android.util.Log
 import androidx.compose.animation.core.AnimationSpec
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.animate
@@ -16,6 +17,7 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -52,6 +54,10 @@ fun <T : Any> AutoScrollingLazyRow(
 ) {
     val lazyListState = rememberLazyListState()
     val coroutineScope = rememberCoroutineScope()
+
+    LaunchedEffect(lazyListState){
+        Log.d("lazyListState", "listState : ${lazyListState.firstVisibleItemIndex} ${lazyListState.layoutInfo.visibleItemsInfo.first().index}")
+    }
 
     var items by remember { mutableStateOf(list.mapAutoScrollItem()) }
 
@@ -116,7 +122,7 @@ suspend fun ScrollableState.autoScroll(
     animationSpec: AnimationSpec<Float> = tween(durationMillis = 800, easing = LinearEasing)
 ) {
     var previousValue = 0f
-    scroll(MutatePriority.PreventUserInput) {
+    scroll(MutatePriority.Default) {
         animate(0f, SCROLL_DX, animationSpec = animationSpec) { currentValue, _ ->
             previousValue += scrollBy(currentValue - previousValue)
         }
