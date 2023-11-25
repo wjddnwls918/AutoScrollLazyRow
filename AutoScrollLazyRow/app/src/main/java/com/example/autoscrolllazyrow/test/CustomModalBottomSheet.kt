@@ -2,8 +2,8 @@ package com.example.autoscrolllazyrow.test
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
@@ -27,13 +28,17 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.autoscrolllazyrow.CommonViewModel
 import com.example.autoscrolllazyrow.R
 import com.example.autoscrolllazyrow.common.PaymentEntity
 import kotlinx.coroutines.launch
@@ -43,11 +48,15 @@ import kotlinx.coroutines.launch
 fun CustomModalBottomSheet(
     modifier: Modifier = Modifier,
     showBottomSheet: Boolean,
-    paymentList: List<PaymentEntity> = listOf(),
-    setShowBottomSheetState: (Boolean) -> Unit
+    commonViewModel: CommonViewModel = viewModel(),
+    setShowBottomSheetState: (Boolean) -> Unit,
 ) {
     val sheetState = rememberModalBottomSheetState()
     val scope = rememberCoroutineScope()
+
+    val paymentList by commonViewModel.paymentList.collectAsState()
+
+    val paymentListState = rememberLazyListState()
 
     if (showBottomSheet) {
         ModalBottomSheet(
@@ -87,7 +96,7 @@ fun CustomModalBottomSheet(
                     }
                 }
 
-                LazyColumn(modifier = Modifier.weight(1f)) {
+                LazyColumn(modifier = Modifier.weight(1f), state = paymentListState) {
                     itemsIndexed(items = paymentList) { index, item ->
                         PaymentItem(
                             modifier = Modifier
@@ -95,17 +104,36 @@ fun CustomModalBottomSheet(
                                 .height(80.dp)
                                 .padding(start = 16.dp, end = 16.dp),
                             item
-                        )
+                        ) {
+                            commonViewModel.updatePaymentListSelectedState(index)
+                            scope.launch { sheetState.hide() }.invokeOnCompletion {
+                                if (!sheetState.isVisible) {
+                                    setShowBottomSheetState(false)
+                                }
+                            }
+                        }
                     }
                 }
             }
         }
+
+        LaunchedEffect(paymentList) {
+            val currentSelectedPosition = paymentList.indexOfFirst { it.isSelected }
+            paymentListState.scrollToItem(currentSelectedPosition)
+        }
     }
 }
 
+
 @Composable
-fun PaymentItem(modifier: Modifier = Modifier, paymentEntity: PaymentEntity) {
-    Surface(modifier = modifier.fillMaxSize()) {
+fun PaymentItem(
+    modifier: Modifier = Modifier,
+    paymentEntity: PaymentEntity,
+    itemClickEvent: () -> Unit
+) {
+    Surface(modifier = modifier
+        .fillMaxSize()
+        .clickable { itemClickEvent() }) {
 
         // 선택 테두리
         if (paymentEntity.isSelected) {

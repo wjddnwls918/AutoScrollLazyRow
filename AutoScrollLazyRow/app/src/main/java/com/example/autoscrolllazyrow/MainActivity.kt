@@ -60,8 +60,7 @@ class MainActivity : ComponentActivity() {
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(600.dp),
-                        showBottomSheet = showBottomSheet,
-                        paymentList = makeDummyData()
+                        showBottomSheet = showBottomSheet
                     ) {
                         showBottomSheet = it
                     }
@@ -78,23 +77,5 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
-    }
-
-    private fun makeDummyData(): List<PaymentEntity> {
-        return listOf(
-            PaymentEntity("Deep Dream 미니언즈", "신한카드 본인 4825", true, true),
-            PaymentEntity("신한카드 Deep Dream O…", "본인 9940"),
-            PaymentEntity("신한카드 Deep Once Plus", "본인 9940"),
-            PaymentEntity("신한은행 신한 주거래 우대통장", "신한은행 2715", false),
-            PaymentEntity("농협 자유저축예탁금", "농협 2715", false),
-            PaymentEntity("Deep Dream 미니언즈", "신한카드 본인 4825"),
-            PaymentEntity("Deep Dream 미니언즈", "신한카드 본인 4825"),
-            PaymentEntity("Deep Dream 미니언즈", "신한카드 본인 4825"),
-            PaymentEntity("Deep Dream 미니언즈", "신한카드 본인 4825"),
-            PaymentEntity("농협 자유저축예탁금", "농협 2715", false),
-            PaymentEntity("농협 자유저축예탁금", "농협 2715", false),
-            PaymentEntity("농협 자유저축예탁금", "농협 2715", false),
-            PaymentEntity("농협 자유저축예탁금", "농협 2715", false),
-        )
     }
 }
