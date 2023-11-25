@@ -109,19 +109,15 @@ fun PaymentItem(modifier: Modifier = Modifier, paymentEntity: PaymentEntity) {
 
         // 선택 테두리
         if (paymentEntity.isSelected) {
-            Box(
+            Surface(
                 modifier = Modifier
                     .fillMaxSize()
-                    .shadow(
-                        elevation = 12.dp,
-                        spotColor = Color(0x29000000),
-                        ambientColor = Color(0x29000000)
-                    )
                     .border(
                         width = 2.dp,
                         color = Color(0xFF414E7F),
                         shape = RoundedCornerShape(size = 8.dp)
-                    )
+                    ),
+                shadowElevation = 12.dp
             ) {
 
             }

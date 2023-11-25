@@ -82,7 +82,7 @@ class MainActivity : ComponentActivity() {
 
     private fun makeDummyData(): List<PaymentEntity> {
         return listOf(
-            PaymentEntity("Deep Dream 미니언즈", "신한카드 본인 4825", true),
+            PaymentEntity("Deep Dream 미니언즈", "신한카드 본인 4825", true, true),
             PaymentEntity("신한카드 Deep Dream O…", "본인 9940"),
             PaymentEntity("신한카드 Deep Once Plus", "본인 9940"),
             PaymentEntity("신한은행 신한 주거래 우대통장", "신한은행 2715", false),
