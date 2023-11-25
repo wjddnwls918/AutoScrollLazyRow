@@ -55,11 +55,22 @@ class MainActivity : ComponentActivity() {
                         Text(text = "hide bottomSheet")
                     }
 
+                    val calculatedHeight by remember {
+                        derivedStateOf {
+                            val headerHeight = 86
+                            val itemHeight = 80 * viewModel.paymentList.value.size
+
+                            headerHeight + itemHeight
+                        }
+                    }
 
                     CustomModalBottomSheet(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(600.dp),
+                            .heightIn(
+                                min = 122.dp,
+                                max = if (calculatedHeight > 600) 600.dp else calculatedHeight.dp
+                            ),
                         showBottomSheet = showBottomSheet
                     ) {
                         showBottomSheet = it

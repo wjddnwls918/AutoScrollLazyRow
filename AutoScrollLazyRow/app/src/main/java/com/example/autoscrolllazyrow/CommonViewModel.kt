@@ -49,12 +49,12 @@ class CommonViewModel @Inject constructor() : ViewModel() {
             PaymentEntity("농협 자유저축예탁금", "농협 2715", false),
             PaymentEntity("Deep Dream 미니언즈", "신한카드 본인 4825"),
             PaymentEntity("Deep Dream 미니언즈", "신한카드 본인 4825"),
-            PaymentEntity("Deep Dream 미니언즈", "신한카드 본인 4825"),
-            PaymentEntity("Deep Dream 미니언즈", "신한카드 본인 4825"),
-            PaymentEntity("농협 자유저축예탁금", "농협 2715", false),
-            PaymentEntity("농협 자유저축예탁금", "농협 2715", false),
-            PaymentEntity("농협 자유저축예탁금", "농협 2715", false),
-            PaymentEntity("농협 자유저축예탁금", "농협 2715", false),
+//            PaymentEntity("Deep Dream 미니언즈", "신한카드 본인 4825"),
+//            PaymentEntity("Deep Dream 미니언즈", "신한카드 본인 4825"),
+//            PaymentEntity("농협 자유저축예탁금", "농협 2715", false),
+//            PaymentEntity("농협 자유저축예탁금", "농협 2715", false),
+//            PaymentEntity("농협 자유저축예탁금", "농협 2715", false),
+//            PaymentEntity("농협 자유저축예탁금", "농협 2715", false),
         )
     }
 
